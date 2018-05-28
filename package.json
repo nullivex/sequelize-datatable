@@ -1,0 +1,45 @@
+{
+  "name": "sequelize-datatables",
+  "version": "1.2.1",
+  "description": "Server-side datatables with sequelize",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "mocha",
+    "run-docker": "./initialize-database-container"
+  },
+  "keywords": [
+    "sequelize",
+    "datatables"
+  ],
+  "engines": {
+    "node": ">= 4.0.0"
+  },
+  "author": "Alwin Arrasyid <alwin.ridd@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^3.4.6",
+    "lodash": "^4.16.6",
+    "sequelize": "^3.27.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alwint3r/sequelize-datatable-node.git"
+  },
+  "bugs": {
+    "url": "https://github.com/alwint3r/sequelize-datatable-node/issues"
+  },
+  "homepage": "https://github.com/alwint3r/sequelize-datatable-node#readme",
+  "devDependencies": {
+    "bluebird": "^3.4.6",
+    "chai": "^3.5.0",
+    "eslint": "^3.9.1",
+    "eslint-config-airbnb": "^13.0.0",
+    "eslint-plugin-import": "^2.1.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "^6.6.0",
+    "mocha": "^3.2.0",
+    "mysql": "^2.13.0",
+    "pg": "^6.1.0",
+    "pg-native": "^1.10.0"
+  }
+}
