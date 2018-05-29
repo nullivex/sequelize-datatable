@@ -1,66 +1,64 @@
-'use strict';
+import _ from 'lodash'
 
-const _ = require(`lodash`);
-
-function boolify(booleanalike) {
+const boolify = (booleanalike) => {
   if (typeof booleanalike === `boolean`) {
-    return booleanalike;
+    return booleanalike
   }
 
-  return booleanalike === `true`;
+  return booleanalike === `true`
 }
 
-function getColumnName(field) {
+const getColumnName = (field) => {
   return field.indexOf(`.`) > -1
     ? field.split(`.`).pop()
-    : field;
+    : field
 }
 
-function boolAlike(value) {
-  return (value === `true` || value === `false`) || typeof value === `boolean`;
+const boolAlike = (value) => {
+  return (value === `true` || value === `false`) || typeof value === `boolean`
 }
 
-function getModelName(field) {
+const getModelName = (field) => {
   return field.indexOf(`.`) > -1
     ? field.split(`.`).shift()
-    : field;
+    : field
 }
 
-function dfs(node, stack, visited) {
+const dfs = (node, stack, visited) => {
   if (!node) {
-    return visited;
+    return visited
   }
 
-  visited.push(node);
+  visited.push(node)
 
   if (_.isArray(node.include) && node.include.length > 0) {
-    _.each(node.include, include => stack.push(include));
+    _.each(node.include, include => stack.push(include))
   }
 
-  return dfs(stack.pop(), stack, visited);
+  return dfs(stack.pop(), stack, visited)
 }
 
-function searchify(column) {
+const searchify = (column) => {
   return column.indexOf(`.`) > -1
     ? `$${column}$`
-    : column;
+    : column
 }
 
-function getModelAndColumn(column) {
+const getModelAndColumn = (column) => {
   if (column.indexOf(`.`) > -1) {
-    return column.split(`.`);
+    return column.split(`.`)
   }
 
-  return [``, column];
+  return [``, column]
 }
 
-function getDialectFromModel(model) {
-  const sequelize = model.QueryInterface.sequelize;
+const getDialectFromModel = (model) => {
+  const sequelize = model.QueryInterface.sequelize
 
-  return sequelize.options.dialect;
+  return sequelize.options.dialect
 }
 
-module.exports = {
+export default {
   boolify,
   getColumnName,
   searchify,
@@ -68,5 +66,5 @@ module.exports = {
   getModelName,
   boolAlike,
   getModelAndColumn,
-  getDialectFromModel,
-};
+  getDialectFromModel
+}

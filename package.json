@@ -1,11 +1,15 @@
 {
-  "name": "sequelize-datatables",
+  "name": "sequelize-datatable",
   "version": "1.2.1",
   "description": "Server-side datatables with sequelize",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "scripts": {
+    "clean": "rimraf dist",
+    "lint": "eslint src test",
+    "build": "babel src --out-dir dist",
     "test": "mocha",
-    "run-docker": "./initialize-database-container"
+    "test:setup": "./initialize-database-container",
+    "prepublish": "npm run clean && npm run lint && npm run build"
   },
   "keywords": [
     "sequelize",
@@ -14,32 +18,48 @@
   "engines": {
     "node": ">= 4.0.0"
   },
-  "author": "Alwin Arrasyid <alwin.ridd@gmail.com>",
+  "author": "Husnul Anwari <husnulhamidiah@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "bluebird": "^3.4.6",
-    "lodash": "^4.16.6",
-    "sequelize": "^3.27.0"
+    "bluebird": "^3.5.1",
+    "lodash": "^4.17.10",
+    "sequelize": "^4.37.10"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/alwint3r/sequelize-datatable-node.git"
+    "url": "git+git@github.com/husnulhamidiah/sequelize-datatable.git"
   },
   "bugs": {
-    "url": "https://github.com/alwint3r/sequelize-datatable-node/issues"
+    "url": "https://github.com/husnulhamidiah/sequelize-datatable/issues"
   },
-  "homepage": "https://github.com/alwint3r/sequelize-datatable-node#readme",
+  "homepage": "https://github.com/husnulhamidiah/sequelize-datatable#readme",
+  "files": [
+    "dist",
+    "src"
+  ],
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-preset-env": "^1.7.0",
     "bluebird": "^3.4.6",
     "chai": "^3.5.0",
-    "eslint": "^3.9.1",
+    "eslint": "^4.19.1",
     "eslint-config-airbnb": "^13.0.0",
-    "eslint-plugin-import": "^2.1.0",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.12.0",
     "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.8.0",
     "eslint-plugin-react": "^6.6.0",
+    "eslint-plugin-standard": "^3.1.0",
     "mocha": "^3.2.0",
     "mysql": "^2.13.0",
+    "mysql2": "^1.5.3",
     "pg": "^6.1.0",
-    "pg-native": "^1.10.0"
+    "pg-native": "^1.10.0",
+    "rimraf": "^2.6.2"
+  },
+  "directories": {
+    "test": "test"
   }
 }
