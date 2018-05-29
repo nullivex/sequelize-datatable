@@ -1,12 +1,18 @@
-Sequelize Datatables
+Sequelize Datatable
 ====================
 
-Server-side processing datatables with sequelize. This package was originally forked from [sequelize-datatables](https://github.com/alwint3r/sequelize-datatable-node).
+Server-side datatables with Sequelize (works with Sequelize 3 and 4). This package was originally forked from [sequelize-datatables](https://github.com/alwint3r/sequelize-datatable-node).
 
 #### Support
 
 * Node.js v4 & later
 * Sequelize v3 & later
+
+#### Instalation
+
+```
+npm install sequelize-datatable
+```
 
 #### API
 
@@ -35,7 +41,7 @@ This function takes three arguments to produce output for datatables.
 #### Example Usage
 
 ```js
-const datatable = require(`sequelize-datatables`);
+const datatable = require(`sequelize-datatable`);
 const model = require(`./path/to/sequelize-model`); // Sequelize model
 
 // assuming you are using express
@@ -64,12 +70,16 @@ route.get(`/datasource`, (req, res) => {
 You must have docker installed on your system if you want to test this module on your machine.
 
 ```bash
-git clone https://github.com/alwint3r/sequelize-datatable-node.git
+git clone https://github.com/husnulhamidiah/sequelize-datatable.git
 cd sequelize-datatable-node
 npm install
 
 # It's recommended to test this library using dockerized database engine
-npm run test:setup
+DIALECT=mysql npm run test:setup
+
+# or
+
+DIALECT=postgres npm run test:setup
 
 # on another terminal, enter command
 DIALECT=postgres npm test
