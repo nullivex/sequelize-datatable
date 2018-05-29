@@ -3,7 +3,7 @@ Change log
 
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 
-### v2.0.0 - 2018-05-29
+### v2.0.0-0 - 2018-05-29
 
 * Rewrite all codes in ES6
 * Add full support for Sequelize v4
