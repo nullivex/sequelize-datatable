@@ -1,31 +1,31 @@
-'use strict';
+'use strict'
 
-const Sequelize = require(`sequelize`);
-const db = require(`../helpers/db`)();
+const Sequelize = require(`sequelize`)
+const db = require(`../helpers/db`)()
 
 module.exports = db.define(`customer`, {
   no: {
     type: Sequelize.INTEGER,
     primaryKey: true,
-    autoIncrement: true,
+    autoIncrement: true
   },
 
   name: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING
   },
 
   address: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING
   },
 
   phone: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING
   },
 
   email: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING
   }
 }, {
   timestamps: false,
-  tableName: `customer`,
-});
+  tableName: `customer`
+})

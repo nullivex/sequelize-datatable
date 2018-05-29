@@ -1,149 +1,150 @@
-'use strict';
+'use strict'
 
-const expect = require(`chai`).expect;
-const _ = require(`lodash`);
-const datatable = require(`../`);
-const models = require(`./models`);
-const mockRequest = require(`./mocks/request.json`);
-const mockRelationalRequest = require(`./mocks/relational_request.json`);
-const customerData = require(`./mocks/customer_data`);
-const accountData = require(`./mocks/account_data`);
+const expect = require(`chai`).expect
+const _ = require(`lodash`)
+const datatable = require('../dist')
 
-describe(`datatable(model, config, params)`, function top() {
-  this.timeout(10000);
+const models = require(`./models`)
+const mockRequest = require(`./mocks/request.json`)
+const mockRelationalRequest = require(`./mocks/relational_request.json`)
+const customerData = require(`./mocks/customer_data`)
+const accountData = require(`./mocks/account_data`)
+
+describe(`datatable(model, config, params)`, function top () {
+  this.timeout(10000)
 
   describe(`Querying table without join`, () => {
     describe(`Without search`, () => {
       it(`Should output as expected`, () => {
-        const expected = customerData;
+        const expected = customerData
 
         return datatable(models.customer, mockRequest, {})
           .then((result) => {
-            expect(result.data).to.deep.equal(expected);
+            expect(result.data).to.deep.equal(expected)
 
-            return true;
-          });
-      });
+            return true
+          })
+      })
 
       it(`Should produce result with correct ordering`, () => {
-        const expected = _.reverse(customerData);
-        const request = _.cloneDeep(mockRequest);
+        const expected = _.reverse(customerData)
+        const request = _.cloneDeep(mockRequest)
         request.order = [
           {
             column: 0,
-            dir: `desc`,
-          },
-        ];
+            dir: `desc`
+          }
+        ]
 
         return datatable(models.customer, request, {})
           .then((result) => {
-            expect(result.data).to.deep.equal(expected);
+            expect(result.data).to.deep.equal(expected)
 
-            return true;
-          });
-      });
+            return true
+          })
+      })
 
       it(`Should produce expected result if where field inside params is given`, () => {
-        const expected = customerData.slice(1);
+        const expected = customerData.slice(1)
         const params = {
           where: {
-            name: `winter`,
-          },
-        };
+            name: `winter`
+          }
+        }
 
         return datatable(models.customer, mockRequest, params)
           .then((result) => {
-            expect(result.data).to.deep.equal(expected);
+            expect(result.data).to.deep.equal(expected)
 
-            return true;
-          });
-      });
+            return true
+          })
+      })
 
       it(`Should produce limited result according to request param`, () => {
-        const expected = customerData.slice(0, 1);
-        const request = _.cloneDeep(mockRequest);
-        request.start = 1;
-        request.length = 1;
+        const expected = customerData.slice(0, 1)
+        const request = _.cloneDeep(mockRequest)
+        request.start = 1
+        request.length = 1
 
         return datatable(models.customer, request, {})
           .then((result) => {
-            expect(result.data).to.deep.equal(expected);
+            expect(result.data).to.deep.equal(expected)
 
-            return true;
-          });
-      });
-    });
+            return true
+          })
+      })
+    })
 
     describe(`With search`, () => {
       it(`Should produce expected output`, () => {
-        const expected = customerData.slice(0, 1);
-        const request = _.cloneDeep(mockRequest);
+        const expected = customerData.slice(0, 1)
+        const request = _.cloneDeep(mockRequest)
         request.search = {
           value: `Jane`,
-          regex: false,
-        };
+          regex: false
+        }
 
         return datatable(models.customer, request, {})
           .then((result) => {
-            expect(result.data).to.deep.equal(expected);
+            expect(result.data).to.deep.equal(expected)
 
-            return true;
-          });
-      });
+            return true
+          })
+      })
 
       it(`Should produce expected output with numeric search`, () => {
-        const expected = _.reverse(customerData);
-        const request = _.cloneDeep(mockRequest);
+        const expected = _.reverse(customerData)
+        const request = _.cloneDeep(mockRequest)
         request.search = {
           value: 2,
-          regex: false,
-        };
+          regex: false
+        }
 
         return datatable(models.customer, request, {})
           .then((result) => {
-            expect(result.data).to.deep.equal(expected);
+            expect(result.data).to.deep.equal(expected)
 
-            return true;
-          });
-      });
+            return true
+          })
+      })
 
       it(`Should produce expected output with numeric search`, () => {
-        const expected = customerData;
-        const request = _.cloneDeep(mockRequest);
+        const expected = customerData
+        const request = _.cloneDeep(mockRequest)
         request.columns = _.map(request.columns, (col) => {
           if (col.data === `no`) {
-            return col;
+            return col
           }
 
-          const cloned = _.cloneDeep(col);
-          cloned.searchable = `false`;
+          const cloned = _.cloneDeep(col)
+          cloned.searchable = `false`
 
-          return cloned;
-        });
+          return cloned
+        })
         request.search = {
           value: 2,
-          regex: false,
-        };
+          regex: false
+        }
 
         return datatable(models.customer, request, {})
           .then((result) => {
-            expect(result.data).to.deep.equal(expected);
+            expect(result.data).to.deep.equal(expected)
 
-            return true;
-          });
-      });
-    });
-  });
+            return true
+          })
+      })
+    })
+  })
 
   describe(`Querying table with join`, () => {
     const generallyExpected = [
       _.merge(_.cloneDeep(customerData[0]), {
-        Account: _.omit(accountData[0], [`password`]),
+        Account: _.omit(accountData[0], [`password`])
       }),
       _.merge(_.cloneDeep(customerData[1]), {
-        Account: _.omit(accountData[1], [`password`]),
-      }),
-    ];
+        Account: _.omit(accountData[1], [`password`])
+      })
+    ]
 
     describe(`Without search`, () => {
       it(`Should produce result as expected`, () => {
@@ -152,19 +153,19 @@ describe(`datatable(model, config, params)`, function top() {
             {
               model: models.account,
               as: `Account`,
-              attributes: [`email`, `active`],
-            },
-          ],
-        };
-        const expected = generallyExpected.slice(0);
+              attributes: [`email`, `active`]
+            }
+          ]
+        }
+        const expected = generallyExpected.slice(0)
 
         return datatable(models.customer, mockRelationalRequest, params)
           .then((result) => {
-            expect(result.data).to.deep.equal(expected);
+            expect(result.data).to.deep.equal(expected)
 
-            return true;
-          });
-      });
+            return true
+          })
+      })
 
       it(`Should produce output with correct ordering`, () => {
         const params = {
@@ -172,50 +173,50 @@ describe(`datatable(model, config, params)`, function top() {
             {
               model: models.account,
               as: `Account`,
-              attributes: [`email`, `active`],
-            },
-          ],
-        };
+              attributes: [`email`, `active`]
+            }
+          ]
+        }
 
-        const expected = _.reverse(generallyExpected.slice(0));
-        const request = _.cloneDeep(mockRelationalRequest);
+        const expected = _.reverse(generallyExpected.slice(0))
+        const request = _.cloneDeep(mockRelationalRequest)
         request.order = [
           {
             column: request.columns.length - 1,
-            dir: `asc`,
-          },
-        ];
+            dir: `asc`
+          }
+        ]
 
         return datatable(models.customer, request, params)
           .then((result) => {
-            expect(result.data).to.deep.equal(expected);
+            expect(result.data).to.deep.equal(expected)
 
-            return true;
-          });
-      });
+            return true
+          })
+      })
 
       it(`Should produce expected result if where field inside params is given`, () => {
-        const expected = generallyExpected.slice(0, 1);
+        const expected = generallyExpected.slice(0, 1)
         const params = {
           where: {
-            '$Account.active$': true,
+            '$Account.active$': true
           },
           include: [
             {
               model: models.account,
               as: `Account`,
-              attributes: [`email`, `active`],
-            },
-          ],
-        };
+              attributes: [`email`, `active`]
+            }
+          ]
+        }
 
         return datatable(models.customer, mockRelationalRequest, params)
           .then((result) => {
-            expect(result.data).to.deep.equal(expected);
+            expect(result.data).to.deep.equal(expected)
 
-            return true;
-          });
-      });
-    });
-  });
-});
+            return true
+          })
+      })
+    })
+  })
+})

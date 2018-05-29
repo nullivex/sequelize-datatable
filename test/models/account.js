@@ -1,22 +1,22 @@
-'use strict';
+'use strict'
 
-const Sequelize = require(`sequelize`);
-const db = require(`../helpers/db`)();
+const Sequelize = require(`sequelize`)
+const db = require(`../helpers/db`)()
 
 module.exports = db.define(`account`, {
   email: {
     type: Sequelize.STRING,
-    primaryKey: true,
+    primaryKey: true
   },
 
   password: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING
   },
 
   active: {
-    type: Sequelize.BOOLEAN,
-  },
+    type: Sequelize.BOOLEAN
+  }
 }, {
   timestamps: false,
-  tableName: `account`,
-});
+  tableName: `account`
+})
