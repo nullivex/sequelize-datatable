@@ -8,7 +8,7 @@ module.exports = [
   },
   {
     email: `jane@janedoe.com`,
-    password: crypto.createHash(`sha`).update(`janedoe`).digest(`hex`),
+    password: crypto.createHash(`sha1`).update(`janedoe`).digest(`hex`),
     active: false
   }
 ]

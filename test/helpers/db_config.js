@@ -8,13 +8,13 @@ const ports = {
   postgres: 5432
 }
 const databaseNames = {
-  postgres: `postgres`,
+  postgres: `sequelizedt`,
   mysql: `sequelizedt`
 }
 
 const credentials = {
-  mysql: [`root`, ``],
-  postgres: [`postgres`, null]
+  mysql: [`sequelizedt`, `sequelizedt`],
+  postgres: [`sequelizedt`, 'sequelizedt']
 }
 
 module.exports = {
@@ -22,7 +22,6 @@ module.exports = {
     dialect,
     host: `localhost`,
     port: ports[dialect],
-    operatorsAliases: false,
     logging: enableLogging
   },
   credentials: credentials[dialect],
