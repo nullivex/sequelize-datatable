@@ -3,6 +3,13 @@ Change log
 
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 
+### v2.1.0-0 - 2019-07-03
+
+* Upgrade to latest Sequelize v5
+* Fix typo in test declaration causing an error with hash Digest.
+* Modify test database credentials to make testing more straight forward.
+* Squash all but a minor security advisory in babel-cli.
+
 ### v2.0.0-0 - 2018-05-29
 
 * Rewrite all codes in ES6
