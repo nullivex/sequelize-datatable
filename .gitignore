@@ -67,7 +67,7 @@ typings/
 .serverless
 
 # Build directory
-dist
+#dist
 
 # VSCode configuration
 .vscode
